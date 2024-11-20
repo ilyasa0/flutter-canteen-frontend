@@ -1,7 +1,10 @@
 // ignore_for_file: deprecated_member_use_from_same_package
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canteen_app/core/core.dart';
+import 'package:canteen_app/presentation/auth/pages/login_page.dart';
+import 'package:canteen_app/presentation/home/bloc/logout_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part '../widgets/product_card.dart';
 
@@ -13,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final searchController = TextEditingController();
 
   final indexValue = ValueNotifier(0);
@@ -39,23 +41,49 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+      ),
       child: ListView(
         children: [
-          AppTile(text: 'Catalog'),
+          Row(
+            children: [
+              AppTile(text: 'Catalog'),
+              Spacer(),
+              BlocConsumer<LogoutBloc, LogoutState>(
+                listener: (context, state) {
+                  if (state is LogoutSuccess) {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                  }
+                },
+                builder: (context, state) {
+                  if(state is LogoutLoading) {
+                    return CircularProgressIndicator();
+                  }
+                  return IconButton(onPressed: () {
+                    context.read<LogoutBloc>().add(LogoutButtonPressed());
+                  }, icon: Icon(Icons.logout));
+                },
+              )
+            ],
+          ),
           SpaceHeight(18.0),
-          CustomTextField(controller: searchController, hintText: 'Search..', prefixIcon: Assets.icons.search.svg(),),
+          CustomTextField(
+            controller: searchController,
+            hintText: 'Search..',
+            prefixIcon: Assets.icons.search.svg(),
+          ),
           SpaceHeight(24.0),
           ValueListenableBuilder(
             valueListenable: indexValue,
             builder: (context, index, _) => Row(
               children: [
                 MenuButton(
-                  iconPath: Assets.icons.allCategories.svg(width: 32.0, height: 32.0),
+                  iconPath:
+                      Assets.icons.allCategories.svg(width: 32.0, height: 32.0),
                   label: 'All',
                   isActive: index == 0,
                   onPressed: () => onCategoryTap(0),
@@ -81,7 +109,6 @@ class _HomePageState extends State<HomePage> {
                   isActive: index == 3,
                   onPressed: () => onCategoryTap(3),
                 ),
-
               ],
             ),
           ),
@@ -103,4 +130,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

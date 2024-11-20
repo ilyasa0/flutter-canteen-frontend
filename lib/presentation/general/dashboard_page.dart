@@ -30,6 +30,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0XFF611001),
       body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
@@ -40,6 +41,7 @@ class _DashboardPageState extends State<DashboardPage> {
           });
           },
           items: [
+
             BottomNavigationBarItem(
               icon: Assets.icons.homeIcon.svg(width: 25, height: 25, colorFilter: const ColorFilter.mode(AppColors.black, BlendMode.srcIn)),
               label: 'Home',

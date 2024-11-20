@@ -28,8 +28,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroud,
+      // backgroundColor: AppColors.backgroud,
+      backgroundColor: Color(0XFF611001),
       body: ListView(
+
         padding: const EdgeInsets.all(16.0),
         children: [
           const SpaceHeight(80.0),
@@ -45,8 +47,8 @@ class _LoginPageState extends State<LoginPage> {
               "Canteen",
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.black,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
               ),
             ),
           ),

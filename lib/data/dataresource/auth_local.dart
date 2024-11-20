@@ -11,7 +11,7 @@ class AuthLocal{
     await pref.remove('authData');
   }
 
-  Future<AuthResponse?> getAuthData() async {
+  Future<AuthResponse> getAuthData() async {
     final pref = await SharedPreferences.getInstance();
     final authData = pref.getString('authData');
 
